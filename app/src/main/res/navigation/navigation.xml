@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/splashScreenFragment">
+
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.bangkit2023.c23ps453.ui.splashScreen.SplashFragment"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_appActivity"
+            app:destination="@id/appActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/appActivity"
+        android:name="com.bangkit2023.c23ps453.ui.AppActivity"
+        android:label="activity_app"
+        tools:layout="@layout/activity_app" />
+</navigation>

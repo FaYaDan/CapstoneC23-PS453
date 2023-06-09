@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Measuring Body Size</string>
+    <string name="image_app">image_app</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="age">Age</string>
+    <string name="hint">0</string>
+    <string name="submit">Submit</string>
+    <string name="icon_minus">icon_minus</string>
+    <string name="icon_plus">icon_plus</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="silahkan_ambil_foto">Silahkan Ambil Foto!!</string>
+    <string name="ambil_foto">Ambil Foto</string>
+    <string name="scan">Scan</string>
+    <string name="ukuran_baju_yang_cocok_untuk_kamu">Ukuran Baju Yang Cocok Untuk Kamu</string>
+    <string name="size">Size</string>
+    <string name="size_">XXL</string>
+    <string name="selesai">selesai</string>
+    <string name="step_1">Step 1</string>
+    <string name="vector_1">vector_1</string>
+    <string name="icon_slide">icon_slide</string>
+    <string name="vector_2">vector_2</string>
+    <string name="step_2">Step 2</string>
+</resources>
