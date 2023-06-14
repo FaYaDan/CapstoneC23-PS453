@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "213200879775",
+    "project_id": "measuring-body-size-8d0da",
+    "storage_bucket": "measuring-body-size-8d0da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213200879775:android:46ddb3830ebf018706e2aa",
+        "android_client_info": {
+          "package_name": "com.bangkit2023.c23ps453"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213200879775-1t2t82lc291lq3eku38bhp75g3gpt89e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bangkit2023.c23ps453",
+            "certificate_hash": "6b8197ee91d35f0644ec2447a467d5d124c38c18"
+          }
+        },
+        {
+          "client_id": "213200879775-d3ao9fljnekdd11b99668fd751rqp5d7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyIiGGpoOaxngOijp7qxyykfe_1oSQ4ek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213200879775-d3ao9fljnekdd11b99668fd751rqp5d7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

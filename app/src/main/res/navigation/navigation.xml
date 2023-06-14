@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_splashScreenFragment_to_appActivity"
             app:destination="@id/appActivity" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <activity
         android:id="@+id/appActivity"
         android:name="com.bangkit2023.c23ps453.ui.AppActivity"
         android:label="activity_app"
         tools:layout="@layout/activity_app" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.bangkit2023.c23ps453.ui.authentication.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 </navigation>

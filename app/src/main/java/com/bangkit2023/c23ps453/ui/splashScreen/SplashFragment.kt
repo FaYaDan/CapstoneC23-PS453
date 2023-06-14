@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bangkit2023.c23ps453.R
 import com.bangkit2023.c23ps453.databinding.FragmentSplashBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class SplashFragment : Fragment() {
 
@@ -20,6 +23,8 @@ class SplashFragment : Fragment() {
     companion object {
         private const val DURATION: Long = 1500
     }
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +37,17 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.action_splashScreenFragment_to_appActivity)
-            requireActivity().finish()
-        }, DURATION)
+
+        auth = Firebase.auth
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_splashScreenFragment_to_appActivity)
+            }, DURATION)
+        } else {
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_splashScreenFragment_to_loginActivity)
+            }, DURATION)
+        }
     }
 }
