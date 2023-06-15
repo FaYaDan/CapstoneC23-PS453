@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bangkit2023.c23ps453.R
 import com.bangkit2023.c23ps453.databinding.FragmentStepOneBinding
 
 class StepOneFragment : Fragment() {

@@ -7,12 +7,6 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.bangkit2023.c23ps453.MainActivity
-import com.bangkit2023.c23ps453.R
-import com.bangkit2023.c23ps453.databinding.ActivityLoginBinding
 import com.bangkit2023.c23ps453.databinding.ActivityRegisterBinding
 import com.bangkit2023.c23ps453.ui.MainViewModelFactory
 import com.bangkit2023.c23ps453.ui.authentication.login.LoginActivity
@@ -38,13 +32,29 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.buttonRegister.setOnClickListener{
+            val email = binding.edRegisterEmail.text.toString()
+            val pass = binding.edRegisterPassword.text.toString()
 
             if (binding.edRegisterName.text.isEmpty()){
                 binding.edRegisterName.error = "Nama Tidak Boleh Kosong"
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.edRegisterEmail.text).matches()) {
+            }
+            else if (email.isEmpty()) {
+                binding.edRegisterEmail.error = "Masukan Email!"
+                binding.edRegisterEmail.requestFocus()
+            }
+            else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 binding.edRegisterEmail.error = "Email Tidak Valid!!!!"
                 binding.edRegisterEmail.requestFocus()
-            } else {
+            }
+            else if (pass.isEmpty()){
+                binding.edRegisterPassword.error = "Masukan Password!"
+                binding.edRegisterPassword.requestFocus()
+            }
+            else if (pass.length <= 8){
+                binding.edRegisterPassword.error = "Password Kurang dari 8 karakter!"
+                binding.edRegisterPassword.requestFocus()
+            }
+            else {
                 viewModel.register(
                     binding.edRegisterName.text.toString(),
                     binding.edRegisterEmail.text.toString(),

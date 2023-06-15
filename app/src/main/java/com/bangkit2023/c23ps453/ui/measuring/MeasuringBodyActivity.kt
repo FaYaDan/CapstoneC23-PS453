@@ -21,7 +21,6 @@ class MeasuringBodyActivity : AppCompatActivity() {
         binding = ActivityMeasuringBodyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         vHeight = binding.etHeight.text.toString()
         vWeight = binding.etWeight.text.toString()
         vAge = binding.etAge.text.toString()

@@ -31,10 +31,26 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btLogin.setOnClickListener{
-            if (!Patterns.EMAIL_ADDRESS.matcher(binding.edLoginEmail.text).matches()) {
-                binding.edLoginEmail.error = "Email Tidak Valid!!!!"
+            val email = binding.edLoginEmail.text.toString()
+            val pass = binding.edLoginPassword.text.toString()
+
+            if (email.isEmpty()) {
+                binding.edLoginEmail.error = "Masukan Email!"
                 binding.edLoginEmail.requestFocus()
-            } else {
+            }
+            else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.edLoginEmail.error = "Email Tidak Valid!"
+                binding.edLoginEmail.requestFocus()
+            }
+            else if (pass.isEmpty()){
+                binding.edLoginPassword.error = "Masukan Password!"
+                binding.edLoginPassword.requestFocus()
+            }
+            else if (pass.length <= 8){
+                binding.edLoginPassword.error = "Password Kurang dari 8 karakter!"
+                binding.edLoginPassword.requestFocus()
+            }
+            else {
                 viewModel.login(
                     binding.edLoginEmail.text.toString(),
                     binding.edLoginPassword.text.toString()

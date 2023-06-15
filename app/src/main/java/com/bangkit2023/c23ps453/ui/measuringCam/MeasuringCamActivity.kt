@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +20,7 @@ import androidx.core.content.FileProvider
 import com.bangkit2023.c23ps453.databinding.ActivityMeasuringCamBinding
 import com.bangkit2023.c23ps453.ui.resultMeasuringCam.ResultMeasuringCamActivity
 import com.bangkit2023.c23ps453.utils.createTempFile
+import org.opencv.android.OpenCVLoader
 import java.io.File
 
 class MeasuringCamActivity : AppCompatActivity() {
@@ -27,6 +29,7 @@ class MeasuringCamActivity : AppCompatActivity() {
     private var getFile: File? = null
 
     companion object {
+        private const val TAG = "MeasuringCamActivity"
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
         private const val MAXIMAL_SIZE = 1000000
@@ -62,13 +65,16 @@ class MeasuringCamActivity : AppCompatActivity() {
             )
         }
 
-        startTakePhoto()
-        binding.buttonfoto.setOnClickListener { startTakePhoto() }
+
+        if (OpenCVLoader.initDebug()) {
+            Log.d(TAG,"OpenCV: ${OpenCVLoader.initDebug()}")
+        }
 
         binding.buttonScan.setOnClickListener {
             val intent = Intent(this@MeasuringCamActivity, ResultMeasuringCamActivity::class.java)
             startActivity(intent)
         }
+        binding.buttonfoto.setOnClickListener { startTakePhoto() }
     }
 
     private fun startTakePhoto() {

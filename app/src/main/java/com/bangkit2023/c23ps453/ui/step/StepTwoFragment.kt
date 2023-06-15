@@ -6,9 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bangkit2023.c23ps453.R
-import com.bangkit2023.c23ps453.databinding.FragmentStepOneBinding
 import com.bangkit2023.c23ps453.databinding.FragmentStepTwoBinding
+import com.bangkit2023.c23ps453.ui.TestActivity
 import com.bangkit2023.c23ps453.ui.measuringCam.MeasuringCamActivity
 
 class StepTwoFragment : Fragment() {
@@ -28,7 +27,7 @@ class StepTwoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonOpenCam.setOnClickListener {
+        binding.arrow.setOnClickListener {
             val intent = Intent(requireContext(), MeasuringCamActivity::class.java)
             startActivity(intent)
         }

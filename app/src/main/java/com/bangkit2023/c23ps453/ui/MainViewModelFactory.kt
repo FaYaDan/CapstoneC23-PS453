@@ -7,6 +7,7 @@ import com.bangkit2023.c23ps453.data.MeasuringRepository
 import com.bangkit2023.c23ps453.di.Injection
 import com.bangkit2023.c23ps453.ui.authentication.login.LoginViewModel
 import com.bangkit2023.c23ps453.ui.authentication.register.RegisterViewModel
+import com.bangkit2023.c23ps453.ui.resultsMeasuring.ResultMeasuringViewModel
 
 class MainViewModelFactory private constructor(private val measuringRepository: MeasuringRepository): ViewModelProvider.NewInstanceFactory(){
 
@@ -17,6 +18,9 @@ class MainViewModelFactory private constructor(private val measuringRepository: 
         }
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)){
             return LoginViewModel(measuringRepository) as T
+        }
+        if (modelClass.isAssignableFrom(ResultMeasuringViewModel::class.java)){
+            return ResultMeasuringViewModel(measuringRepository) as T
         }
         throw IllegalArgumentException("UnKnown ViewModel Class : " + modelClass.name)
     }
