@@ -7,6 +7,7 @@ import androidx.activity.OnBackPressedCallback
 import com.bangkit2023.c23ps453.databinding.ActivityAppBinding
 import com.bangkit2023.c23ps453.ui.authentication.login.LoginActivity
 import com.bangkit2023.c23ps453.ui.measuring.MeasuringBodyActivity
+import com.bangkit2023.c23ps453.ui.measuringCam.MeasuringCamActivity
 import com.bangkit2023.c23ps453.ui.step.StepActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -20,11 +21,11 @@ class AppActivity : AppCompatActivity() {
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonManual.setOnClickListener {
+        binding.cont1.setOnClickListener {
             val intent = Intent(this@AppActivity, MeasuringBodyActivity::class.java)
             startActivity(intent)
         }
-        binding.buttonCam.setOnClickListener {
+        binding.cont2.setOnClickListener {
             val intent = Intent(this@AppActivity, StepActivity::class.java)
             startActivity(intent)
         }

@@ -32,10 +32,6 @@
         android:theme="@style/Theme.MeasuringBodySize"
         tools:targetApi="31">
         <activity
-            android:name=".ui.TestActivity"
-            android:screenOrientation="fullSensor"
-            android:exported="false" />
-        <activity
             android:name=".ui.authentication.register.RegisterActivity"
             android:exported="false" />
         <activity
@@ -46,6 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.measuringCam.MeasuringCamActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.step.StepActivity"

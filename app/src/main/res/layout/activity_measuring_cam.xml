@@ -7,104 +7,44 @@
     android:background="@color/blue_27374D"
     tools:context=".ui.measuringCam.MeasuringCamActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <org.opencv.android.JavaCameraView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:show_fps="true"
+        android:id="@+id/frame_surface"/>
+
+
+    <Button
+        android:id="@+id/buttonback"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/background_rounded"
+        android:fontFamily="@font/nunito_extrabold"
+        android:paddingHorizontal="55dp"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textColor="@color/grey_526D82"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_deploy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Under development"
+        android:textColor="#FF0000"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frame_surface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/app"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/nunito_extrabold"
-                android:text="@string/app_name"
-                android:textColor="@color/white_DDE6ED"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="327dp"
-                android:layout_height="471dp"
-                android:layout_marginTop="70dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.493"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/app"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/textEmpty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="32dp"
-                android:fontFamily="@font/nunito_semibold"
-                android:gravity="center"
-                android:text="@string/silahkan_ambil_foto"
-                android:textColor="@color/white_DDE6ED"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/app" />
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-                <Button
-                    android:id="@+id/buttonfoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/background_rounded"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:paddingHorizontal="30dp"
-                    android:text="@string/ambil_foto"
-                    android:textAllCaps="false"
-                    android:textColor="@color/grey_526D82"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/buttonScan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/background_rounded"
-                    android:fontFamily="@font/nunito_extrabold"
-                    android:paddingHorizontal="55dp"
-                    android:text="@string/scan"
-                    android:textAllCaps="false"
-                    android:textColor="@color/grey_526D82"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

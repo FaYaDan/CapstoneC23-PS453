@@ -1,38 +1,49 @@
 package com.bangkit2023.c23ps453.ui.measuringCam
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.provider.MediaStore
 import android.util.Log
+import android.view.SurfaceView
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
+import com.bangkit2023.c23ps453.R
 import com.bangkit2023.c23ps453.databinding.ActivityMeasuringCamBinding
-import com.bangkit2023.c23ps453.ui.resultMeasuringCam.ResultMeasuringCamActivity
-import com.bangkit2023.c23ps453.utils.createTempFile
+import com.bangkit2023.c23ps453.ui.AppActivity
+import org.opencv.android.BaseLoaderCallback
+import org.opencv.android.CameraBridgeViewBase
+import org.opencv.android.LoaderCallbackInterface
 import org.opencv.android.OpenCVLoader
-import java.io.File
+import org.opencv.core.CvType
+import org.opencv.core.Mat
 
-class MeasuringCamActivity : AppCompatActivity() {
+class MeasuringCamActivity : AppCompatActivity(), CameraBridgeViewBase.CvCameraViewListener2 {
 
     private lateinit var binding: ActivityMeasuringCamBinding
-    private var getFile: File? = null
 
-    companion object {
-        private const val TAG = "MeasuringCamActivity"
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private const val MAXIMAL_SIZE = 1000000
+    private var mRgba: Mat? = null
+    private var mGrey: Mat? = null
+    private var mOpenCVCamera: CameraBridgeViewBase? = null
+    private val mLoaderCallBack: BaseLoaderCallback = object : BaseLoaderCallback(this) {
+        override fun onManagerConnected(status: Int) {
+            when (status) {
+                SUCCESS -> {
+                    run {
+                        Log.i(TAG, "opencv is loaded")
+                        mOpenCVCamera!!.enableView()
+                    }
+                    run { super.onManagerConnected(status) }
+                }
+                else -> {
+                    super.onManagerConnected(status)
+                }
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -41,71 +52,81 @@ class MeasuringCamActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (!allPermissionsGranted()) {
-                Toast.makeText(this, "Tidak mendapatkan permission.", Toast.LENGTH_SHORT).show()
-                finish()
+        when (requestCode) {
+            1 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mOpenCVCamera!!.setCameraPermissionGranted()
+                } else {
+                    Toast.makeText(this, "Tidak mendapatkan permission.", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                return
             }
         }
     }
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
 
+    companion object{
+        const val TAG = "MeasuringCamActivity"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMeasuringCamBinding.inflate(layoutInflater)
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        ActivityCompat.requestPermissions(
+            this@MeasuringCamActivity,
+            arrayOf<String>(Manifest.permission.CAMERA),
+            1
+        )
         setContentView(binding.root)
+        mOpenCVCamera = findViewById<View>(R.id.frame_surface) as CameraBridgeViewBase
+        mOpenCVCamera!!.visibility = SurfaceView.VISIBLE
+        mOpenCVCamera!!.setCvCameraViewListener(this)
 
-        if (!allPermissionsGranted()) {
-            ActivityCompat.requestPermissions(
-                this,
-                REQUIRED_PERMISSIONS,
-                REQUEST_CODE_PERMISSIONS
-            )
-        }
-
-
-        if (OpenCVLoader.initDebug()) {
-            Log.d(TAG,"OpenCV: ${OpenCVLoader.initDebug()}")
-        }
-
-        binding.buttonScan.setOnClickListener {
-            val intent = Intent(this@MeasuringCamActivity, ResultMeasuringCamActivity::class.java)
+        binding.buttonback.setOnClickListener {
+            val intent = Intent(this, AppActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            this@MeasuringCamActivity.finish()
         }
-        binding.buttonfoto.setOnClickListener { startTakePhoto() }
+
     }
 
-    private fun startTakePhoto() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.resolveActivity(packageManager)
-        createTempFile(application).also {
-            val photoURI: Uri = FileProvider.getUriForFile(this, "com.bangkit2023.c23ps453", it)
-            currentPhotoPath = it.absolutePath
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            launcherIntentCamera.launch(intent)
+    override fun onResume() {
+        super.onResume()
+        if (OpenCVLoader.initDebug()) {
+            mLoaderCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS)
+        } else {
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mLoaderCallBack)
         }
     }
 
-    private lateinit var currentPhotoPath: String
-
-    private val launcherIntentCamera = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == RESULT_OK) {
-            val myFile = File(currentPhotoPath)
-
-            myFile.let { file -> getFile = file
-//                rotateFile(file)
-                binding.imageView.setImageBitmap(BitmapFactory.decodeFile(file.path))
-                val bitmap = BitmapFactory.decodeFile(file.path)
-                if (bitmap == null){
-                    binding.textEmpty.visibility = View.VISIBLE
-                } else {
-                    binding.textEmpty.visibility = View.GONE
-                }
-            }
+    override fun onPause() {
+        super.onPause()
+        if (mOpenCVCamera != null) {
+            mOpenCVCamera!!.disableView()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (mOpenCVCamera != null) {
+            mOpenCVCamera!!.disableView()
+        }
+    }
+
+    override fun onCameraViewStarted(width: Int, height: Int) {
+        mRgba = Mat(height, width, CvType.CV_8UC4)
+        mGrey = Mat(height, width, CvType.CV_8UC1)
+    }
+
+    override fun onCameraViewStopped() {
+        mRgba!!.release()
+    }
+
+    override fun onCameraFrame(inputFrame: CameraBridgeViewBase.CvCameraViewFrame): Mat? {
+        mRgba = inputFrame.rgba()
+        mGrey = inputFrame.gray()
+        return mRgba
     }
 }
